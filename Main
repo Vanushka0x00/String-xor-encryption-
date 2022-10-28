@@ -1,0 +1,26 @@
+#include <iostream>
+#include <Windows.h>
+using namespace std;
+
+void main()
+{
+    srand(time(nullptr));
+    char name[] = "Hello world";  // тут любой текст, не нужно следить за кол-вом символов
+
+    int* generateXor = new int[sizeof(name) - 1];   // массив для ключей к шифрованию
+    for (int i = 0; i < sizeof(name) - 1; i++) {
+        generateXor[i] = 1 + rand() % 420;   // генерация рандом чисел для xor
+    }
+
+    
+    char* nameObf = new char[sizeof(name) - 1];  // массив для xorенных значений
+    for (int i = 0; i < sizeof(name) - 1; i++) {
+        nameObf[i] = (int)name[i] ^ generateXor[i];  // само шифрование
+        cout << nameObf[i];
+    }
+    cout << "\n";
+
+    for (int i = 0; i < sizeof(name) - 1; i++) {
+        cout << (char)((int)nameObf[i] ^ generateXor[i]);  // дешифровка по массиву ключей
+    }
+}
